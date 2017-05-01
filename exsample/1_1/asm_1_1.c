@@ -18,7 +18,7 @@ int sum(int* array, int size)
       "add $0x01, %[i] \t\n"        // i++
       "cmp %[i], %[size] \t\n"      // i < size の結果をステータスレジスタに格納
       "ja loop \t\n"                     // i < size がtrueならloopラベルにジャンプ
-    :[ret]"=&r"(ret), [tmp]"+&r"(tmp), [i]"+&r"(i)
+    :[ret]"=&r"(ret), [tmp]"+r"(tmp), [i]"+r"(i)
     :[array]"r"(array), [size]"r"(size)
   );
 
