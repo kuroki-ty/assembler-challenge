@@ -11,6 +11,7 @@ int sum(int* array, int size)
 *  }
 ************************************/
   asm volatile (
+    "mov $0x00, %[ret] \t\n"
     "loop: \t\n"
       "mov (%[array]), %[tmp] \t\n"  // arrayポインタの中身をtmpに格納
       "add %[tmp], %[ret] \t\n"      // ret += tmp;
