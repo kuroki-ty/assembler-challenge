@@ -4,7 +4,6 @@ int sum(int* array, int size)
 {
   int ret;
   int tmp;
-  int i = 0;
 
 /************************************
 *  for(int i = 0; i < size; i++) {
@@ -13,13 +12,13 @@ int sum(int* array, int size)
 ************************************/
   asm volatile (
     "loop: \t\n"
-      "mov (%[array], %[i], 4), %[tmp] \t\n"  // array[i]の値をtmpに格納  arrayの先頭ptr+(i*4byte)の値 → tmp
-      "add %[tmp], %[ret] \t\n"     // ret += tmp
-      "add $0x01, %[i] \t\n"        // i++
-      "cmp %[i], %[size] \t\n"      // i < size の結果をステータスレジスタに格納
-      "ja loop \t\n"                     // i < size がtrueならloopラベルにジャンプ
-    :[ret]"=&r"(ret), [tmp]"+r"(tmp), [i]"+r"(i)
-    :[array]"r"(array), [size]"r"(size)
+      "mov (%[array]), %[tmp] \t\n"  // arrayポインタの中身をtmpに格納
+      "add %[tmp], %[ret] \t\n"      // ret += tmp;
+      "add $0x04, %[array] \t\n"     // array++;
+      "sub $0x01, %[size] \t\n"      // size--;
+      "jnz loop \t\n"                // size != 0 がtrueならloopラベルにジャンプ
+    :[ret]"=&r"(ret), [tmp]"+r"(tmp), [array]"+r"(array), [size]"+r"(size)
+    :
   );
 
   return ret;
