@@ -33,7 +33,10 @@ bool HelloWorld::init()
 
 void HelloWorld::onEnter()
 {
-    auto example = new Example1();
-    int answer = example->calcAnswer();
-    _label->setString(std::to_string(answer));
+    std::string answer = "";
+
+    auto example1 = new Example1();
+    answer = std::to_string(example1->calcAnswer());
+
+    _label->setString(answer);
 }

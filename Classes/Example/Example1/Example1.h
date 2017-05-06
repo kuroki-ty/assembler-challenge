@@ -1,8 +1,7 @@
 #ifndef Example1_h
 #define Example1_h
 
-//#include "cocos2d.h"
-#include <stdio.h>
+#include "cocos2d.h"
 
 class Example1
 {
