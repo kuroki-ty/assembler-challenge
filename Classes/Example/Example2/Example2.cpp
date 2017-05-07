@@ -36,10 +36,8 @@ void Example2::copyMemory(void *dst, const void *src, size_t size)
      ************************************/
     asm volatile (
                   "Loop:"
-                    "LDR r0, [%[src]] \t\n"               // srcの値をr0にロード
-                    "STR r0, [%[dst]] \t\n"               // r0をdstにストア
-                    "ADD %[src], %[src], #1 \t\n"         // src++;
-                    "ADD %[dst], %[dst], #1 \t\n"         // dst++;
+                    "LDR r0, [%[src]], #1 \t\n"               // srcの値をr0にロードしてsrc++ (post-indexed)
+                    "STR r0, [%[dst]], #1 \t\n"               // r0をdstにストアしてdst++ (post-indexed)
                     "SUB %[size], %[size], #1 \t\n"       // size--;
                     "CMP %[size], #0 \t\n"
                     "BNE Loop \t\n"                       // size != 0 がtrueならloopラベルにジャンプ
