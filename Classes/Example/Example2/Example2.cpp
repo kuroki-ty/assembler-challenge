@@ -31,5 +31,20 @@ std::string& Example2::calcAnswer()
 
 void Example2::copyMemory(void *dst, const void *src, size_t size)
 {
-    memcpy(dst, src, size);
+    /************************************
+     *  memcpy(dst, src, size);
+     ************************************/
+    asm volatile (
+                  "Loop:"
+                    "LDR r0, [%[src]] \t\n"               // srcの値をr0にロード
+                    "STR r0, [%[dst]] \t\n"               // r0をdstにストア
+                    "ADD %[src], %[src], #1 \t\n"         // src++;
+                    "ADD %[dst], %[dst], #1 \t\n"         // dst++;
+                    "SUB %[size], %[size], #1 \t\n"       // size--;
+                    "CMP %[size], #0 \t\n"
+                    "BNE Loop \t\n"                       // size != 0 がtrueならloopラベルにジャンプ
+                  :[dst]"+r"(dst), [src]"+r"(src), [size]"+r"(size)
+                  :
+                  :"r0"
+                  );
 }
