@@ -15,14 +15,7 @@ char* Example2::calcAnswer()
     char buf2[6] = "12345";
     size_t size = 6;
 
-    std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
-
     copyMemory(buf1, buf2, size);
-
-    std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
-
-    double elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end-start).count();
-    printf("処理時間: %f[μs]\n", elapsed);
 
     _answer = buf1;
 
