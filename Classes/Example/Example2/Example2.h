@@ -9,10 +9,10 @@ public:
     Example2();
     virtual ~Example2();
 
-    char* calcAnswer();
+    std::string calcAnswer();
 
 private:
-    char* _answer;
+    std::string _answer;
 
     void copyMemory(void *dst, const void *src, size_t size);
 

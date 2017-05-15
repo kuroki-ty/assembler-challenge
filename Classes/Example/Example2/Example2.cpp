@@ -1,7 +1,7 @@
 #include "Example2.h"
 
 Example2::Example2()
-: _answer(nullptr)
+: _answer("")
 {
 }
 
@@ -9,7 +9,7 @@ Example2::~Example2()
 {
 }
 
-char* Example2::calcAnswer()
+std::string Example2::calcAnswer()
 {
     char buf1[6];
     char buf2[6] = "12345";
