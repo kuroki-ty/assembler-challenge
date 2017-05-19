@@ -11,31 +11,67 @@ Example2::~Example2()
 
 std::string Example2::calcAnswer()
 {
-    char buf1[6];
-    char buf2[6] = "12345";
-    size_t size = 6;
+    char buf2[10] = "123456789";
+    char buf1[10];
+    size_t size = 5;
 
-    copyMemory(buf1, buf2, size);
+    int c = 0;
+    copyMemory(buf1, buf2, size, &c);
 
     _answer = buf1;
+
+    CC_ASSERT(memcmp(buf1, buf2, size) == 0);
 
     return _answer;
 }
 
-void Example2::copyMemory(void *dst, const void *src, size_t size)
+void Example2::copyMemory(void *dst, const void *src, size_t size, int *c)
 {
     /************************************
      *  memcpy(dst, src, size);
      ************************************/
     asm volatile (
+                  "B Loop \t\n"
+
+                  "Loop1:"
+                    "LDR r1, [%[c]] \t\n"
+                    "ADD r1, r1, #1 \t\n"
+                    "STR r1, [%[c]] \t\n"
+
+                    "LDRB r0, [%[src]], #1 \t\n"
+                    "STRB r0, [%[dst]], #1 \t\n"
+                    "SUB %[size], %[size], #1 \t\n"
+                    "B Loop \t\n"
+
+                  "Loop2:"
+                    "LDR r1, [%[c]] \t\n"
+                    "ADD r1, r1, #20 \t\n"
+                    "STR r1, [%[c]] \t\n"
+
+                    "LDRH r0, [%[src]], #2 \t\n"
+                    "STRH r0, [%[dst]], #2 \t\n"
+                    "SUB %[size], %[size], #2 \t\n"
+                    "B Loop \t\n"
+
+                  "Loop4:"
+                    "LDR r1, [%[c]] \t\n"
+                    "ADD r1, r1, #40 \t\n"
+                    "STR r1, [%[c]] \t\n"
+
+                    "LDR r0, [%[src]], #4 \t\n"
+                    "STR r0, [%[dst]], #4 \t\n"
+                    "SUB %[size], %[size], #4 \t\n"
+                    "B Loop \t\n"
+
                   "Loop:"
-                    "LDR r0, [%[src]], #1 \t\n"               // srcの値をr0にロードしてsrc++ (post-indexed)
-                    "STR r0, [%[dst]], #1 \t\n"               // r0をdstにストアしてdst++ (post-indexed)
-                    "SUB %[size], %[size], #1 \t\n"       // size--;
-                    "CMP %[size], #0 \t\n"
-                    "BNE Loop \t\n"                       // size != 0 がtrueならloopラベルにジャンプ
+                    "CMP %[size], #4 \t\n"
+                    "BGE Loop4 \t\n"
+                    "CMP %[size], #2 \t\n"
+                    "BGE Loop2 \t\n"
+                    "CMP %[size], #1 \t\n"
+                    "BGE Loop1 \t\n"
                   :[dst]"+r"(dst), [src]"+r"(src), [size]"+r"(size)
-                  :
-                  :"r0"
+                  :[c]"r"(c)
+                  :"r0", "r1"
                   );
 }
