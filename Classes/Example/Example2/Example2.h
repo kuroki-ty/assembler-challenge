@@ -14,7 +14,7 @@ public:
 private:
     std::string _answer;
 
-    void copyMemory(void *dst, const void *src, size_t size, int *c);
+    void copyMemory(void *dst, const void *src, size_t size);
 
 };
 
