@@ -11,13 +11,28 @@ Example2::~Example2()
 
 std::string Example2::calcAnswer()
 {
-    char buf2[10] = "123456789";
-    char buf1[10];
-    size_t size = 5;
+    char *buf2;
+    char *buf1;
+    size_t size = 1000000;
+    buf1 = (char*)malloc(size);
+    buf2 = (char*)malloc(size);
+
+    if (!buf1 || !buf2) {
+        return "メモリ確保失敗";
+    }
+
+    for (int i = 0; i < size; i++) {
+        buf2[i] = 'A';
+    }
+
+    std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
 
     copyMemory(buf1, buf2, size);
 
-    _answer = buf1;
+    std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
+
+    double elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end-start).count();
+    printf("処理時間: %f[μs]\n", elapsed);
 
     CC_ASSERT(memcmp(buf1, buf2, size) == 0);
 
