@@ -48,20 +48,20 @@ void Example2::copyMemory(void *dst, const void *src, size_t size)
                   "B Loop \t\n"
 
                   "Loop1:"
-                    "LDRB r0, [%[src]], #1 \t\n"
-                    "STRB r0, [%[dst]], #1 \t\n"
+                    "LDRB r4, [%[src]], #1 \t\n"
+                    "STRB r4, [%[dst]], #1 \t\n"
                     "SUB %[size], %[size], #1 \t\n"
                     "B Loop \t\n"
 
                   "Loop2:"
-                    "LDRH r0, [%[src]], #2 \t\n"
-                    "STRH r0, [%[dst]], #2 \t\n"
+                    "LDRH r4, [%[src]], #2 \t\n"
+                    "STRH r4, [%[dst]], #2 \t\n"
                     "SUB %[size], %[size], #2 \t\n"
                     "B Loop \t\n"
 
                   "Loop4:"
-                    "LDR r0, [%[src]], #4 \t\n"
-                    "STR r0, [%[dst]], #4 \t\n"
+                    "LDR r4, [%[src]], #4 \t\n"
+                    "STR r4, [%[dst]], #4 \t\n"
                     "SUB %[size], %[size], #4 \t\n"
                     "B Loop \t\n"
 
@@ -70,14 +70,14 @@ void Example2::copyMemory(void *dst, const void *src, size_t size)
                     "CMP %[size], #4 \t\n"
                     "BLT Label_load2 \t\n"
 
-                    "ANDS r1, %[src], 0x3 \t\n"
+                    "ANDS r5, %[src], 0x3 \t\n"
                     "BEQ Loop4 \t\n"
 
                   "Label_load2:"
                     "CMP %[size], #2 \t\n"
                     "BLT Label_load1 \t\n"
 
-                    "ANDS r1, %[src], 0x1 \t\n"
+                    "ANDS r5, %[src], 0x1 \t\n"
                     "BEQ Loop2 \t\n"
 
                   "Label_load1:"
@@ -85,6 +85,6 @@ void Example2::copyMemory(void *dst, const void *src, size_t size)
                     "BGE Loop1 \t\n"
                   :[dst]"+r"(dst), [src]"+r"(src), [size]"+r"(size)
                   :
-                  :"r0", "r1"
+                  :"r4", "r5"
                   );
 }
