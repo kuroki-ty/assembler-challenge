@@ -12,6 +12,8 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		3056F1131EBDAA3F002127AD /* Example2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3056F1111EBDAA3F002127AD /* Example2.cpp */; };
+		3056F1141EBDACF4002127AD /* Example2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3056F1111EBDAA3F002127AD /* Example2.cpp */; };
 		3088E32C1EBC4D170084E96B /* Example1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3088E32A1EBC4D170084E96B /* Example1.cpp */; };
 		3088E32D1EBC4F900084E96B /* Example1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3088E32A1EBC4D170084E96B /* Example1.cpp */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
@@ -109,6 +111,8 @@
 		1D6058910D05DD3D006BFB54 /* assembly-challenge iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "assembly-challenge iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3056F1111EBDAA3F002127AD /* Example2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Example2.cpp; sourceTree = "<group>"; };
+		3056F1121EBDAA3F002127AD /* Example2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example2.h; sourceTree = "<group>"; };
 		3088E32A1EBC4D170084E96B /* Example1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Example1.cpp; sourceTree = "<group>"; };
 		3088E32B1EBC4D170084E96B /* Example1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example1.h; sourceTree = "<group>"; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
@@ -277,10 +281,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3056F1101EBDAA3F002127AD /* Example2 */ = {
+			isa = PBXGroup;
+			children = (
+				3056F1111EBDAA3F002127AD /* Example2.cpp */,
+				3056F1121EBDAA3F002127AD /* Example2.h */,
+			);
+			path = Example2;
+			sourceTree = "<group>";
+		};
 		3088E3281EBC4CF80084E96B /* Example */ = {
 			isa = PBXGroup;
 			children = (
 				3088E3291EBC4CF80084E96B /* Example1 */,
+				3056F1101EBDAA3F002127AD /* Example2 */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -514,6 +528,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3056F1131EBDAA3F002127AD /* Example2.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
@@ -527,6 +542,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3056F1141EBDACF4002127AD /* Example2.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				3088E32D1EBC4F900084E96B /* Example1.cpp in Sources */,
