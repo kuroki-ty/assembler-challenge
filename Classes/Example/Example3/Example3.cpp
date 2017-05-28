@@ -12,7 +12,7 @@ Example3::~Example3()
 std::string Example3::calcAnswer()
 {
     uint32_t src = 0x1234ABCD;
-    uint32_t dst = *swapByte(&src);
+    uint32_t dst = *swapByteAsm(&src);
 
     printf("src: %08x\ndst: %08x\n", src, dst);
 
@@ -31,4 +31,21 @@ uint32_t* Example3::swapByte(uint32_t* src)
     dst[0] = *p;
 
     return (uint32_t*)dst;
+}
+
+uint32_t* Example3::swapByteAsm(uint32_t* src)
+{
+    uint32_t *dst;
+    char *p = (char*)src;
+
+    asm volatile (
+                  "LDR r4, [%[src]] \t\n"
+                  "REV r5, r4 \t\n"
+                  "STR r5, [%[dst]] \t\n"
+                  :[dst]"+r"(dst), [src]"+r"(src)
+                  :
+                  :"r4", "r5"
+                  );
+
+    return dst;
 }
