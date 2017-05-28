@@ -12,6 +12,8 @@ public:
     std::string calcAnswer();
 
 private:
+    uint32_t* swapByte(uint32_t* src);
+
     std::string _answer;
 };
 
