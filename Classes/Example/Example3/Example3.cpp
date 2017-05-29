@@ -36,15 +36,33 @@ uint32_t* Example3::swapByte(uint32_t* src)
 uint32_t* Example3::swapByteAsm(uint32_t* src)
 {
     uint32_t *dst;
-    char *p = (char*)src;
 
     asm volatile (
                   "LDR r4, [%[src]] \t\n"
-                  "REV r5, r4 \t\n"
-                  "STR r5, [%[dst]] \t\n"
+                  "LDR r6, [%[dst]] \t\n"
+
+                  "AND r5, r4, 0xff \t\n"
+                  "ORR r6, r5, r6 \t\n"
+                  "LSL r6, r6, #8 \t\n"
+                  "LSR r4, r4, #8 \t\n"
+
+                  "AND r5, r4, 0xff \t\n"
+                  "ORR r6, r5, r6 \t\n"
+                  "LSL r6, r6, #8 \t\n"
+                  "LSR r4, r4, #8 \t\n"
+
+                  "AND r5, r4, 0xff \t\n"
+                  "ORR r6, r5, r6 \t\n"
+                  "LSL r6, r6, #8 \t\n"
+                  "LSR r4, r4, #8 \t\n"
+
+                  "AND r5, r4, 0xff \t\n"
+                  "ORR r6, r5, r6 \t\n"
+
+                  "STR r6, [%[dst]] \t\n"
                   :[dst]"+r"(dst), [src]"+r"(src)
                   :
-                  :"r4", "r5"
+                  :"r4", "r5", "r6"
                   );
 
     return dst;
