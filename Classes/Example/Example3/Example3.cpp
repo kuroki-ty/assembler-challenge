@@ -12,11 +12,25 @@ Example3::~Example3()
 std::string Example3::calcAnswer()
 {
     uint32_t src = 0x1234ABCD;
+
     printf("src: %08x\n", src);
 
     uint32_t dst = swapByteAsm(src);
 
     printf("dst: %08x\n", dst);
+
+    auto check = [](uint32_t a, uint32_t b) {
+        char *pin  = (char*)&a;
+        char *pout = (char*)&b;
+        for (int i = 0; i < 4; i++) {
+            if (!(pin[i] == pout[3-i])) {
+                return false;
+            }
+        }
+        return true;
+    };
+
+    CC_ASSERT(check(src, dst));
 
     return _answer;
 }
