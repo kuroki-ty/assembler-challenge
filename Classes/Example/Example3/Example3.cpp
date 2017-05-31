@@ -12,33 +12,39 @@ Example3::~Example3()
 std::string Example3::calcAnswer()
 {
     uint32_t src = 0x1234ABCD;
-    uint32_t dst = *swapByteAsm(&src);
+    printf("src: %08x\n", src);
 
-    printf("src: %08x\ndst: %08x\n", src, dst);
+    uint32_t dst = swapByteAsm(src);
+
+    printf("dst: %08x\n", dst);
 
     return _answer;
 }
 
-uint32_t* Example3::swapByte(uint32_t* src)
+uint32_t Example3::swapByte(uint32_t src)
 {
-    char dst[4];
-    char *p = (char*)src;
+    uint32_t dst = 0;
+
+    char *pin  = (char*)&src;
+    char *pout = ((char*)&dst) + 3;
 
     // byte swap
-    dst[3] = *p++;
-    dst[2] = *p++;
-    dst[1] = *p++;
-    dst[0] = *p;
+    for (int i = 0; i < 4; i++, pin++, pout--) {
+        *pout = *pin;
+    }
 
-    return (uint32_t*)dst;
+    return dst;
 }
 
-uint32_t* Example3::swapByteAsm(uint32_t* src)
+uint32_t Example3::swapByteAsm(uint32_t src)
 {
-    uint32_t *dst;
+    uint32_t dst = 0;
+
+    char *pin  = (char*)&src;
+    char *pout = (char*)&dst;
 
     asm volatile (
-                  "LDR r4, [%[src]] \t\n"
+                  "LDR r4, [%[pin]] \t\n"
                   "MOV r6, #0 \t\n"
                   "MOV r7, 0x000000ff \t\n"
 
@@ -54,9 +60,9 @@ uint32_t* Example3::swapByteAsm(uint32_t* src)
                   "AND r5, r4, r7, LSL #24 \t\n"
                   "ORR r6, r6, r5, LSR #24 \t\n"
 
-                  "STR r6, [%[dst]] \t\n"
+                  "STR r6, [%[pout]] \t\n"
                   :
-                  :[dst]"r"(dst), [src]"r"(src)
+                  :[pin]"r"(pin), [pout]"r"(pout)
                   :"r4", "r5", "r6", "r7"
                   );
 
