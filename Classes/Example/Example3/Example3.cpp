@@ -52,33 +52,25 @@ uint32_t Example3::swapByte(uint32_t src)
 
 uint32_t Example3::swapByteAsm(uint32_t src)
 {
-    uint32_t dst = 0;
-
-    char *pin  = (char*)&src;
-    char *pout = (char*)&dst;
-
     asm volatile (
-                  "LDR r4, [%[pin]] \t\n"
-                  "MOV r6, #0 \t\n"
-                  "MOV r7, 0x000000ff \t\n"
+                  "MOV r5, #0 \t\n"
+                  "MOV r6, 0x000000ff \t\n"
 
-                  "AND r5, r4, r7 \t\n"
-                  "ORR r6, r6, r5, LSL #24 \t\n"
+                  "AND r4, %[src], r6 \t\n"
+                  "ORR r5, r5, r4, LSL #24 \t\n"
 
-                  "AND r5, r4, r7, LSL #8 \t\n"
-                  "ORR r6, r6, r5, LSL #8 \t\n"
+                  "AND r4, %[src], r6, LSL #8 \t\n"
+                  "ORR r5, r5, r4, LSL #8 \t\n"
 
-                  "AND r5, r4, r7, LSL #16 \t\n"
-                  "ORR r6, r6, r5, LSR #8 \t\n"
+                  "AND r4, %[src], r6, LSL #16 \t\n"
+                  "ORR r5, r5, r4, LSR #8 \t\n"
 
-                  "AND r5, r4, r7, LSL #24 \t\n"
-                  "ORR r6, r6, r5, LSR #24 \t\n"
-
-                  "STR r6, [%[pout]] \t\n"
+                  "AND r4, %[src], r6, LSL #24 \t\n"
+                  "ORR %[src], r5, r4, LSR #24 \t\n"
+                  :[src]"+r"(src)
                   :
-                  :[pin]"r"(pin), [pout]"r"(pout)
-                  :"r4", "r5", "r6", "r7"
+                  :"r4", "r5", "r6"
                   );
 
-    return dst;
+    return src;
 }
