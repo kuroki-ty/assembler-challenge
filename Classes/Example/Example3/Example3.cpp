@@ -54,22 +54,21 @@ uint32_t Example3::swapByteAsm(uint32_t src)
 {
     asm volatile (
                   "MOV r5, #0 \t\n"
-                  "MOV r6, 0x000000ff \t\n"
 
-                  "AND r4, %[src], r6 \t\n"
+                  "AND r4, %[src], 0x000000ff \t\n"
                   "ORR r5, r5, r4, LSL #24 \t\n"
 
-                  "AND r4, %[src], r6, LSL #8 \t\n"
+                  "AND r4, %[src], 0x0000ff00 \t\n"
                   "ORR r5, r5, r4, LSL #8 \t\n"
 
-                  "AND r4, %[src], r6, LSL #16 \t\n"
+                  "AND r4, %[src], 0x00ff0000 \t\n"
                   "ORR r5, r5, r4, LSR #8 \t\n"
 
-                  "AND r4, %[src], r6, LSL #24 \t\n"
+                  "AND r4, %[src], 0xff000000 \t\n"
                   "ORR %[src], r5, r4, LSR #24 \t\n"
                   :[src]"+r"(src)
                   :
-                  :"r4", "r5", "r6"
+                  :"r4", "r5"
                   );
 
     return src;
