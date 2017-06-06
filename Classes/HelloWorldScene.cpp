@@ -1,6 +1,7 @@
 #include "HelloWorldScene.h"
 #include "Example1.h"
 #include "Example2.h"
+#include "Example3.h"
 
 USING_NS_CC;
 
@@ -40,9 +41,13 @@ void HelloWorld::onEnter()
     auto example1 = new Example1();
     answer = std::to_string(example1->calcAnswer());
  ***/
-
+/*** Example2
     auto example2 = new Example2();
     answer = example2->calcAnswer();
+ ***/
+
+    auto example3 = new Example3();
+    answer = example3->calcAnswer();
 
     _label->setString(answer);
 }
